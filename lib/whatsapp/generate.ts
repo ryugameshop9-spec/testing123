@@ -1,0 +1,3 @@
+export function generateOrderCode(){return `ORD-${Math.random().toString(36).slice(2,8).toUpperCase()}`;}
+export function generateWhatsAppLink(adminNumber:string,message:string){const encodedMessage=encodeURIComponent(message);return `https://wa.me/${adminNumber}?text=${encodedMessage}`;}
+export function buildOrderMessage(input:any){return `Halo Admin, saya ingin order produk digital.\n\nDetail Order:\nKode Order: ${input.orderCode}\nNama Pembeli: ${input.customer_name}\nNomor WhatsApp: ${input.customer_whatsapp}\nProduk: ${input.product.name}\nKategori: ${input.category}\nHarga: Rp ${Number(input.product.price).toLocaleString('id-ID')}\nCatatan: ${input.customer_note||'-'}\n\nMohon info pembayaran dan proses ordernya. Terima kasih.`}

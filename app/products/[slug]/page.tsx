@@ -1,0 +1,3 @@
+import { products,categories } from '@/lib/database/mock-data';import Link from 'next/link';
+export default function Detail({params}:{params:{slug:string}}){const p=products.find(x=>x.slug===params.slug); if(!p) return <div>Not found</div>; const c=categories.find(x=>x.id===p.category_id);
+return <div className='space-y-3'><h1 className='text-2xl font-bold'>{p.name}</h1><p>{p.description}</p><ul className='list-disc ml-5'>{p.benefits?.map((b:string)=><li key={b}>{b}</li>)}</ul><Link href={`/checkout?slug=${p.slug}`} className='inline-block bg-green-600 px-4 py-2 rounded'>Order via WhatsApp</Link><p>Demo: <a href={p.demo_url}>{p.demo_url}</a> | Kategori: {c?.name}</p></div>}

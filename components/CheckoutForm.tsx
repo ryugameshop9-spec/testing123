@@ -1,0 +1,5 @@
+"use client";
+import { useState } from "react";
+export default function CheckoutForm({product}:{product:any}){const [f,setF]=useState({customer_name:"",customer_whatsapp:"",customer_note:""}); const [link,setLink]=useState("");
+async function submit(e:any){e.preventDefault();const res=await fetch('/app-api/generate-whatsapp-link',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product,...f})}); const d=await res.json(); setLink(d.link); window.location.href=d.link;}
+return <form onSubmit={submit} className="space-y-3 bg-card p-4 rounded-xl"><input required className="w-full p-2 bg-black/30 rounded" placeholder="Nama" onChange={e=>setF({...f,customer_name:e.target.value})}/><input required className="w-full p-2 bg-black/30 rounded" placeholder="No WhatsApp" onChange={e=>setF({...f,customer_whatsapp:e.target.value})}/><textarea className="w-full p-2 bg-black/30 rounded" placeholder="Catatan" onChange={e=>setF({...f,customer_note:e.target.value})}/><button className="w-full bg-green-600 py-2 rounded">Order via WhatsApp</button>{link && <p className="text-xs break-all">{link}</p>}</form>}
