@@ -1,0 +1,11 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "mysql" url = env("DATABASE_URL") }
+
+model User { id Int @id @default(autoincrement()) name String email String @unique password String role String @default("admin") created_at DateTime @default(now()) updated_at DateTime @updatedAt }
+model Category { id Int @id @default(autoincrement()) name String slug String @unique description String? icon String? status String @default("active") created_at DateTime @default(now()) updated_at DateTime @updatedAt products Product[] }
+model Product { id Int @id @default(autoincrement()) category_id Int name String slug String @unique description String short_description String? price Int image String? demo_url String? file_url String? type String @default("digital") status String @default("active") is_featured Boolean @default(false) sold_count Int @default(0) created_at DateTime @default(now()) updated_at DateTime @updatedAt category Category @relation(fields:[category_id],references:[id]) orders Order[] }
+model Order { id Int @id @default(autoincrement()) order_code String @unique product_id Int customer_name String customer_whatsapp String customer_note String? total_price Int status String @default("pending") whatsapp_message String created_at DateTime @default(now()) updated_at DateTime @updatedAt product Product @relation(fields:[product_id],references:[id]) }
+model Banner { id Int @id @default(autoincrement()) title String subtitle String? image String? button_text String? button_url String? status String @default("active") created_at DateTime @default(now()) updated_at DateTime @updatedAt }
+model Testimonial { id Int @id @default(autoincrement()) name String message String rating Int image String? status String @default("active") created_at DateTime @default(now()) updated_at DateTime @updatedAt }
+model Setting { id Int @id @default(autoincrement()) site_name String site_logo String? whatsapp_admin String email String? address String? instagram String? telegram String? tiktok String? maintenance_mode Boolean @default(false) created_at DateTime @default(now()) updated_at DateTime @updatedAt }
+model AdminLog { id Int @id @default(autoincrement()) admin_id Int action String description String created_at DateTime @default(now()) }

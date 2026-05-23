@@ -1,0 +1,2 @@
+import { NextResponse } from 'next/server';import { buildOrderMessage, generateOrderCode, generateWhatsAppLink } from '@/lib/whatsapp/generate';import { categories, settings } from '@/lib/database/mock-data';
+export async function POST(req:Request){const body=await req.json(); const cat=categories.find(c=>c.id===body.product.category_id); const orderCode=generateOrderCode(); const msg=buildOrderMessage({...body,orderCode,category:cat?.name||'-'}); const link=generateWhatsAppLink(settings.whatsapp_admin,msg); return NextResponse.json({orderCode,message:msg,link})}
